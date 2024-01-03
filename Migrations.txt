@@ -1,0 +1,38 @@
+php artisan make:migration  create_blogs_table
+                                     |
+                                (tablo adı)
+
+php arisan migrate(artisan çalıştırma)
+php artisan migrate:rollback (son yapılan migrate işlemini geri alır)
+php artisan migrate:rollback --step=2 (son iki işlemi geri alır)
+php artisan migrate:refresh
+php artisan migrate:reset (tüm migrations işlemleri geri alınır kısaca reset edilir)
+
+
+not:migrations'da reset yada refresh işlemelerinde db içindeki butun veriler gider..
+
+
+Schema::rename("users","users2");  // tablo ismi değiştirme 
+
+Schema::drop("course") // tabloyu silme 
+
+
+$table->string("blog_title"); // sutun olusturma
+
+//sutun duzenleme islemleri
+$table->string("blog_title")->nullable();  // boş veri kabul eder.
+$table-integer("blog_must")-unsigned();   // işaretsiz
+
+//sutun tur ve ozelliklerini değiştirme 
+
+$table->text("blog_title");//str text çeviridik ardından refresh yapmamız grekiyor.
+
+
+//dizin indeskleri
+
+$table->string("blog_email")->unique(); // benzersiz olmasını istedik
+$table->string("blog_email")->index(); //  düzenli olark gelir arama yapmak istadiğimiz  sutunlar için kullanmamız tavsiye edilir.
+
+
+
+
