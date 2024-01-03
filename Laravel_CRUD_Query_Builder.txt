@@ -1,0 +1,346 @@
+  public function index()
+    {  /*veri çekme
+       $blog=DB::table("blog")->get();
+       dd($blog);
+       */ 
+  
+       /* where
+       $blog=DB::table("blog")
+       ->where("blog_id","3")
+       ->first();
+       //->get();
+       //dd($blog);
+       echo $blog->blog_title;
+        */
+
+      //other where  oparation
+
+      /*
+      $blog=DB::table("blog")
+      ->where("blog_id","3")
+      ->orwhere("blog_id","4")// birden fazla sınama yapar  id 3 yada 4 olanları 
+      ->orwhere("blog_id","1")
+      ->get();
+      dd($blog);
+
+    
+  
+
+      $blog=DB::table("blog")
+      ->whereBetween("blog_id",[1,2])// 1 ve 2 id arasındaki ıdleri listele
+      ->get();
+      dd($blog);
+
+
+  
+        $blog=DB::table("blog")
+        ->whereNotBetween("blog_id",[1,2])// 1 ve 2 id arasındaki dahil olmayanlaarı getirir.
+        ->get();
+        dd($blog);
+
+  
+
+        $blog=DB::table("blog")
+        ->whereIn("blog_id",[1,2])// 1 ve 2 idli değerleri getirir.
+        ->get();
+        dd($blog);
+
+        
+        $blog=DB::table("blog")
+        ->whereNOTIn("blog_id",[1,2])// 1 ve 2  harici geriye kalan değerleri getirir.
+        ->get();
+        dd($blog);
+
+ 
+
+  
+        $blog=DB::table("blog")
+        ->whereNull("blog_must")//  boş olarak işaretlenenleri  getirir
+        ->get();
+        dd($blog);
+
+
+
+        $blog=DB::table("blog")
+        ->whereNOTNull("blog_must")//  dolu olarak işaretlenenleri  getirir
+        ->get();
+        dd($blog);
+
+
+        $blog=DB::table("blog")
+        ->whereDate("date","2019-10-05")
+        ->get();
+        dd($blog);
+
+
+
+
+     
+        $blog=DB::table("blog")
+        ->whereMonth("date","05") // aya göre getirir.
+        ->get();
+        dd($blog);
+
+   
+
+
+        
+            $blog=DB::table("blog")
+            ->whereDay("date","05") // güne  göre getirir.
+            ->get();
+            dd($blog);
+
+
+            
+            $blog=DB::table("blog")
+            ->whereTime("date","19:07") // saatte  göre getirir.
+            ->get();
+            dd($blog);
+
+      
+                    
+            $blog=DB::table("blog")
+            ->whereColumn("blog_title","blog_content") // iki kolon arasında birbirine eşit olanları getirir.
+            ->get();
+            dd($blog);
+
+    
+        $blog=DB::table("blog")
+        ->where("blog_id")
+        ->value("blog_title");
+        dd($blog);
+
+    
+        // db alan adı id olmazsa sorgu yapmaz örneğn kullanıcı_id şeklide değil düz id şeklinde olursa yapar yoksa hata verir
+                $blog=DB::table("blog")->find(1);//find sadece int değer kayıt eder.
+                dd($blog);
+            
+
+   
+        // sütün değerini alır 
+         $blog=DB::table("blog")->pluck('blog_title');
+        dd($blog);
+
+  
+            //toplam kayıdı verir
+            $blog=DB::table("blog")
+               ->count();
+            dd($blog);
+
+         
+        $blog=DB::table("blog")
+        ->max('blog_must'); // min()
+         dd($blog);
+
+
+        //zincirleme birden fazla method kullanılabiilir.
+         $blog=DB::table("blog")
+         ->where('blog_title','blog title 01')
+         ->min('blog_must');
+
+         echo $blog;
+
+               
+        $blog=DB::table("blog")
+        ->where('id','1')
+        ->doesExist();// değer yoksa true doner //->exists();// değer yoksa fasle doner
+         dd($blog);
+  
+    
+
+            $blog=DB::table("blog")
+            ->select(['blog_title','blog_content']) //sutunları çeker tek başınada değer gönderilir birden ççok değer gönderileceksek dizi içinde gönderilmelidir.
+        
+            ->get();
+            dd($blog);
+
+
+
+
+             //alias tanımlama
+            $blog=DB::table("blog")
+            ->select('blog_title','title')
+            ->get();
+            dd($blog);
+
+
+
+
+//join
+            $blog=DB::table("users")
+            ->join("blog","blog.users_id","=","users.id")
+            ->get();
+             dd($blog);
+
+
+
+  //join+ where 
+             $blog=DB::table("users")
+            ->join("blog","blog.users_id","=","users.id")
+            ->where('users.id',3)
+            ->get();
+            dd($blog);
+
+  
+
+
+            $blog=DB::table("users")
+            ->orderby("user_name",'desc')
+            ->get();
+            foreach ($blog as $key) {
+                 echo $key->id."-".$key->user_name."<br>";
+            }
+
+
+           //sonuçları random olarak sıralar.
+            $blog=DB::table("users")
+            ->inRandomOrder()
+            ->get();
+            foreach ($blog as $key) {
+                echo $key->id."-".$key->user_name."<br>";
+            }
+
+
+
+            $blog=DB::table("users")
+            ->limit(1)
+            ->get();
+            foreach ($blog as $key) {
+                echo $key->id."-".$key->user_name."<br>";
+            }
+                    
+            
+
+            $blog=DB::table("users")
+            ->orderBy("id","desc")
+            ->offset(1)// 1 kayıt atlar 
+            ->limit(2) // 2 kayıt getirir
+              ->get();
+            foreach ($blog as $key) {
+                echo $key->id."-".$key->user_name."<br>";
+            }
+                        
+               
+            
+/////////////INSERT
+         
+             $blog = DB::table("blog")
+             ->insert([
+                      "blog_title"=> "blog title 05",
+             ]);
+   
+        
+
+ 
+     //çoklu ekleme
+        $blog = DB::table("blog")
+        ->insert(
+        [    
+                [
+                    "blog_title"=> "blog title 100",
+                    "blog_content"=> "blog title 100",
+                    "blog_must"=> 100
+            ],
+            [
+                "blog_title"=> "blog title 1907",
+                "blog_content"=> "blog title 1907",
+                "blog_must"=> 1907
+            ]  
+        
+        ] 
+    );
+
+ */
+
+ // kayıt ettilden sonra  id getirir.
+   $blog=DB::table("blog")->insertGetId(
+        [ 
+            'blog_title'=>'blog title 1010',
+            'blog_content'=>'blog title 1010',
+            'blog_must'=>2001
+
+        ]
+   );
+
+
+
+////////////UPDATE
+
+
+   /*
+       $blog=DB::table("blog")
+       ->where("id",1)
+       ->update([
+             'blog_title'=>'Emre',
+             'blog_content'=>'yenen',
+             'blog_must'=>34
+
+       ]);
+     
+
+       //updateorinsert 
+
+        $blog=DB::table("blog")
+        ->where("id",1)
+        ->updateOrInsert(
+            [
+                    'blog_title'=>'Emre' // varsa 
+            ],
+            [
+                    'blog_title'=>'Enes' // yapar   
+            ]
+     ); 
+             //not:kayıt yoksa ekleme yapar.
+
+  */
+        //toplu ekleme ve eksiltme işlemleri 
+
+        $blog=DB::table("blog")
+       // ->increment("blog_must",1);//belirtilen sutunu 1 artırır.
+        ->decrement("blog_must",1);//belirtilen sutunu 1 azaltır
+
+
+        echo $blog;
+        
+
+
+///////Delete
+
+
+  /*
+        $blog=DB::table("blog")
+        ->where("id",1)
+        ->delete();
+     
+   */  
+     //Truncate
+
+
+     $blog=DB::table("blog")
+     ->where("id",1)
+     ->truncate();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   echo $blog;
+
+
