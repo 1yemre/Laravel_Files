@@ -1,0 +1,30 @@
+php artisan make:seeder blogTableSeeder
+                              |
+                         (seed ismi)
+çalışması için     =>   php ardisan db:seed
+
+
+/////migration ve seeder dosyalarını birlikte çalıştırma
+
+php artisan migrate:reset    => tüm dosyaları silinmesini sağladık
+
+
+
+//random veri atama
+        DB::table("blogs")->insert(
+            [
+                'blog_title'=>str::random(10),            
+            ]
+        );
+
+
+
+=>php artisan migrate --seed      => hem migration işlemi yapılır hemde  dosyalar kayıt edelir.
+
+
+
+
+
+
+
+
